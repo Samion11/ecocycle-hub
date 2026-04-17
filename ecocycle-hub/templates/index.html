@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | EcoCycle Hub{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Turn Plastic into Purpose ♻️</h1>
+    <p>We believe in a cleaner planet. We collect your plastic waste and transform it into beautiful, durable, and sustainable products for your home and community.</p>
+    <div>
+        <a href="{{ url_for('products') }}" class="btn">Shop Products</a>
+        <a href="{{ url_for('pickup') }}" class="btn" style="background-color: transparent; border: 2px solid var(--primary-color); color: var(--primary-color); margin-left: 10px;">Request Pickup</a>
+    </div>
+</div>
+
+<div class="features" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; text-align: center;">
+    <div>
+        <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem;">🌍</h2>
+        <h3>Eco-Friendly</h3>
+        <p>100% recycled plastic materials.</p>
+    </div>
+    <div>
+        <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem;">🚚</h2>
+        <h3>Convenient Pickup</h3>
+        <p>We collect waste directly from you.</p>
+    </div>
+    <div>
+        <h2 style="font-size: 2.5rem; margin-bottom: 0.5rem;">✨</h2>
+        <h3>Premium Quality</h3>
+        <p>Durable, strong, and highly aesthetic.</p>
+    </div>
+</div>
+{% endblock %}

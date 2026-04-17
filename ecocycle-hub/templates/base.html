@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EcoCycle Hub | Turn Plastic into Purpose{% endblock %}</title>
+    <meta name="description" content="EcoCycle Hub - We transform plastic waste into beautiful, useful products. Join our eco-friendly mission.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('home') }}" class="brand-logo">
+            ♻️ EcoCycle Hub
+        </a>
+        <ul class="nav-links">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('products') }}">Products</a></li>
+            <li><a href="{{ url_for('pickup') }}">Waste Pickup</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            <li>
+                <a href="{{ url_for('cart') }}" class="cart-btn">
+                    🛒 Cart 
+                    {% set cart_item_count = session.get('cart', {}).values() | sum(attribute='quantity') %}
+                    {% if cart_item_count > 0 %}
+                        <span class="cart-badge">({{ cart_item_count }})</span>
+                    {% endif %}
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 EcoCycle Hub. All rights reserved.</p>
+        <p><small>Turn Plastic into Purpose ♻️</small></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Shopping Cart | EcoCycle Hub{% endblock %}
+
+{% block content %}
+<h1>Your Shopping Cart</h1>
+
+{% if cart %}
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item_id, item in cart.items() %}
+            <tr>
+                <td>
+                    <div class="cart-item-preview">
+                        <img src="{{ url_for('static', filename=item.image) }}" alt="{{ item.name }}" class="cart-item-img">
+                        <span>{{ item.name }}</span>
+                    </div>
+                </td>
+                <td>${{ "%.2f"|format(item.price) }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ "%.2f"|format(item.price * item.quantity) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="cart-summary">
+        <div>
+            <form action="{{ url_for('clear_cart') }}" method="POST">
+                <button type="submit" class="btn" style="background-color: transparent; border: 1px solid #dc3545; color: #dc3545;">Clear Cart</button>
+            </form>
+        </div>
+        <div style="text-align: right;">
+            <div class="cart-total">Total: ${{ "%.2f"|format(total) }}</div>
+            <p style="color: var(--secondary-color); font-size: 0.9rem; margin: 0.5rem 0 1rem;">Plus free eco-friendly shipping!</p>
+            <button class="btn">Proceed to Checkout</button>
+        </div>
+    </div>
+{% else %}
+    <div style="text-align: center; padding: 4rem; background: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--shadow);">
+        <h2 style="font-size: 4rem; margin-bottom: 1rem;">🛒</h2>
+        <h3>Your cart is empty</h3>
+        <p style="margin: 1rem 0 2rem;">Looks like you haven't added any sustainable products yet.</p>
+        <a href="{{ url_for('products') }}" class="btn">Start Shopping</a>
+    </div>
+{% endif %}
+
+{% endblock %}

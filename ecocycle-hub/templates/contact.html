@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us | EcoCycle Hub{% endblock %}
+
+{% block content %}
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1000px; margin: 0 auto;">
+    
+    <div>
+        <h1>Get in Touch</h1>
+        <p style="margin-bottom: 2rem;">Have a question about our products, or want to partner with us for a large recycling drive? We'd love to hear from you.</p>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <strong>📍 Headquarters</strong>
+            <p>42 Green Valley Road<br>Eco City, EC 90210</p>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <strong>📞 Phone</strong>
+            <p>+1 (555) 123-4567</p>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <strong>✉️ Email</strong>
+            <p>hello@ecocyclehub.com</p>
+        </div>
+    </div>
+
+    <div class="form-container" style="width: 100%; margin: 0; box-shadow: none; border: 1px solid var(--border-color);">
+        <form method="POST" action="{{ url_for('contact') }}">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" class="form-control" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- Responsive tweak for smaller screens -->
+<style>
+    @media (max-width: 768px) {
+        .container > div {
+            grid-template-columns: 1fr !important;
+            gap: 2rem !important;
+        }
+    }
+</style>
+{% endblock %}

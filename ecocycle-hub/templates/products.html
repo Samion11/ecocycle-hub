@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Products | EcoCycle Hub{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 3rem;">
+    <h1>Our Sustainable Products</h1>
+    <p>Every purchase removes plastic waste from our environment.</p>
+</div>
+
+<div class="products-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <img src="{{ url_for('static', filename=product.image) }}" alt="{{ product.name }}" class="product-image">
+        <div class="product-info">
+            <h3 class="product-title">{{ product.name }}</h3>
+            <p class="product-desc">{{ product.description }}</p>
+            <div class="product-price">${{ "%.2f"|format(product.price) }}</div>
+            
+            <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST" class="add-to-cart-form">
+                <button type="submit" class="btn">Add to Cart</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
