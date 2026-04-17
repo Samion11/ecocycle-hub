@@ -23,6 +23,15 @@
             <li><a href="{{ url_for('pickup') }}">Waste Pickup</a></li>
             <li><a href="{{ url_for('about') }}">About</a></li>
             <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            {% if current_user.is_authenticated %}
+                {% if current_user.is_admin %}
+                <li><a href="{{ url_for('admin') }}">Admin</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('logout') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
             <li>
                 <a href="{{ url_for('cart') }}" class="cart-btn">
                     🛒 Cart 
@@ -31,6 +40,9 @@
                         <span class="cart-badge">({{ cart_item_count }})</span>
                     {% endif %}
                 </a>
+            </li>
+            <li>
+                <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode">🌙</button>
             </li>
         </ul>
     </nav>
@@ -53,5 +65,28 @@
         <p>&copy; 2026 EcoCycle Hub. All rights reserved.</p>
         <p><small>Turn Plastic into Purpose ♻️</small></p>
     </footer>
+    <script>
+        const themeBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+        
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeBtn.textContent = '☀️';
+        }
+        
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeBtn.textContent = '☀️';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeBtn.textContent = '🌙';
+            }
+        });
+    </script>
 </body>
 </html>
