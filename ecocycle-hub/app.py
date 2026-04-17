@@ -1,9 +1,15 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 app = Flask(__name__)
-# Secret key for session management
-app.secret_key = 'ecocycle_super_secret_key'
+
+# Secure secret key for session management (pulls from environment in production)
+app.secret_key = os.environ.get('SECRET_KEY', 'fallback_development_key')
 
 # In-memory data store for products
 PRODUCTS = [
@@ -162,4 +168,10 @@ def contact():
 if __name__ == '__main__':
     # Ensure static/img directory exists
     os.makedirs(os.path.join(app.root_path, 'static', 'img'), exist_ok=True)
-    app.run(debug=True, port=5000)
+    
+    # Check if we should run in debug mode
+    debug_mode = os.environ.get('FLASK_ENV') == 'development'
+    
+    # Use environment port if specified, otherwise default to 5000
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', debug=debug_mode, port=port)
